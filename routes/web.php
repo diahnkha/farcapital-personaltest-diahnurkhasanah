@@ -16,14 +16,18 @@ use App\Http\Controllers\FormController;
 |
 */
 
-Route::any("/", [PendonorController::class, "list"])->name("homepage")->middleware(["withauth"]);
+Route::get('/', function(){
+    return view('welcome');
+
+})->name("homepage");
+// ->middleware(["withauth"]);
 
 Route::any("/login", [AuthController::class, "login"])->name("login")->middleware(["noauth"]);
 Route::any("/logout", [AuthController::class, "logout"])->name("logout")->middleware(["withauth"]);
 
 Route::prefix('pendonor')
     ->name('pendonor.')
-    ->controller(PendonorController::class)
+    ->controller(pendonorController::class)
     ->group(function () {
         Route::get('/', 'index')->name('list'); // pendonor.list
         Route::get('/show/{pendonor}', 'show')->name('show');
