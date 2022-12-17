@@ -24,7 +24,6 @@ Route::any("/logout", [AuthController::class, "logout"])->name("logout")->middle
 Route::prefix('pendonor')
     ->name('pendonor.')
     ->controller(PendonorController::class)
-    ->middleware(["withauth"])
     ->group(function () {
         Route::get('/', 'index')->name('list'); // pendonor.list
         Route::get('/show/{pendonor}', 'show')->name('show');
