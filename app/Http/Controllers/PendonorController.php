@@ -53,6 +53,15 @@ class PendonorController extends Controller
     // TODO: store pendonor data from request to database
     public function store(Request $request)
     {
+        // if($request->has('fruits')){
+        //     //Checkbox checked //tidak layak
+        //     $request->$pendonor("status_kelayakan") == 0;
+
+        // }else{
+        //     //Checkbox not checked //layak
+        //     $request->$pendonor("status_kelayakan") == 1;
+
+        // }
 
         $validated = [
             'nama' => 'required|min:3|max:50',
