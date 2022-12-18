@@ -29,6 +29,16 @@
             <option value="0" {{ old('status_kelayakan', $pendonor->status_kelayakan) == 0 ? "selected" : ""}}>Tidak Layak</option>
         </select>
     <br>
+    <label for="alamat">update at :</label><br>
+    <h3>{{ $pendonor->created_at }}</h3>
+    <label>Kriteria Lolos Donor adalah sebagai berikut:</label><br/>
+        <input type="checkbox" class="coba" name="kelayakan1[]" value="1"> Usia 17-60 tahun (usia 17 tahun diperbolehkan menjadi donor bila mendapat izin tertulis dari orangtua) <br/>
+        <input type="checkbox" class="coba" name="kelayakan2[]" value="2"> Berat badan minimal 45 kg <br/>
+        <input type="checkbox" class="coba" name="kelayakan3[]" value="3"> Temperatur tubuh 36,6 - 37,5 derajat Celcius <br/>
+        <input type="checkbox" class="coba" name="kelayakan4[]" value="4"> Tekanan darah baik yaitu sistole = 110-160 mmHg, diastole = 70-100 mmHg - Denyut nadi teratur yaitu sekitar 50-100 kali/menit <br/>
+        <input type="checkbox" class="coba" name="kelayakan5[]" value="5"> Hemoglobin perempuan minimal 12 gram, sedangkan untuk laki-laki minimal 12.5 gram <br/>
+
+    <br>
     <button type="submit">Update</button>
 
 </form>

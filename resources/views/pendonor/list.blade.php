@@ -14,7 +14,6 @@
             <th>#</th>
             <th>Nama</th>
             <th>Email</th>
-            <th>Password</th>
             <th>Jenis Kelamin</th>
             <th>Tanggal Lahir</th>
             <th>Alamat</th>
@@ -36,10 +35,7 @@
            {{ $pendonor->email }}
         </td>
         <td>
-           {{ $pendonor->password }}
-        </td>
-        <td>
-           {{ $pendonor->jenis_kelamin }}
+           {{ $pendonor->jenis_kelamin == 0 ? 'Perempuan' : 'Laki-laki' }}
         </td>
         <td>
             {{ $pendonor->tanggal_lahir }}
@@ -48,7 +44,8 @@
             {{ $pendonor->alamat }}
         </td>
         <td>
-           {{ $pendonor->status_kelayakan }}
+           {{ $pendonor->status_kelayakan == 1 ? 'Layak' : 'Tidak Layak' }}
+
         </td>
         <td>
             <a href="{{ route('pendonor.edit', ['pendonor' => $pendonor]) }}">Edit</a>

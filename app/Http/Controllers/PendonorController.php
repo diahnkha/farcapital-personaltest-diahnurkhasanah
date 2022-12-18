@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Pendonor;
+use App\Models\Pengguna;
 use Illuminate\Support\Facades\Storage;
 
 class PendonorController extends Controller
@@ -18,7 +20,15 @@ class PendonorController extends Controller
     //         compact('pendonors')
     //     );
     // }
+
     public function index()
+    {
+        return view(
+            'pendonor.dashboard'
+        );
+    }
+
+    public function list()
     {
         return view(
             'pendonor.list',
@@ -53,16 +63,6 @@ class PendonorController extends Controller
     // TODO: store pendonor data from request to database
     public function store(Request $request)
     {
-        // if($request->has('fruits')){
-        //     //Checkbox checked //tidak layak
-        //     $request->$pendonor("status_kelayakan") == 0;
-
-        // }else{
-        //     //Checkbox not checked //layak
-        //     $request->$pendonor("status_kelayakan") == 1;
-
-        // }
-
         $validated = [
             'nama' => 'required|min:3|max:50',
             'email' => 'required|email:rfc,dns',
@@ -70,13 +70,60 @@ class PendonorController extends Controller
             'jenis_kelamin' => 'required|max:1',
             'tanggal_lahir' => 'required',
             'alamat' => 'required|min:5',
-            'status_kelayakan' => 'required|max:1'
-        ];
 
+        ];
         $validated = $request->validate($validated);
 
+        $validated['password'] = Hash::make($validated['password']);
+
+        // dd($validated);
+
+        // if($request->has('kelayakanpertama')){
+        //     //Checkbox checked //tidak layak
+        //     $kelayakanpertama = 0;
+
+        // }else{
+        //     //Checkbox not checked //layak
+        //     $kelayakanpertama = 1;
+
+        // }
+        $request->has('kelayakanpertama') ? $validated['status_kelayakan'] = 0 : $validated['status_kelayakan'] = 1;
+
+        // if($request->has('kelayakankedua')){
+        //     //Checkbox checked //layak
+        //     $kelayakankedua = 1;
+
+        // }else{
+        //     //Checkbox not checked //tidak layak
+        //     $kelayakankedua = 0;
+
+        // }
+
+        // $request->has('kelayakan1') ? $kelayakan1 = 1 : $kelayakan1 = 0;
+        // $request->has('kelayakan2') ? $kelayakan2 = 1 : $kelayakan2 = 0;
+        // $request->has('kelayakan3') ? $kelayakan3 = 1 : $kelayakan3 = 0;
+        // $request->has('kelayakan4') ? $kelayakan4 = 1 : $kelayakan4 = 0;
+        // $request->has('kelayakan5') ? $kelayakan5 = 1 : $kelayakan5 = 0;
+
+        // $kelayakankedua = $kelayakan1 == 1 && $kelayakan2 == 1 && $kelayakan3 == 1 && $kelayakan4 == 1 && $kelayakan5 == 1;
+
+        // var_dump($kelayakanpertama);
+        // var_dump($kelayakankedua);
+        // die;
+
+        // if($kelayakanpertama == 1 && $kelayakankedua == 1 ){
+        //     $validated['status_kelayakan'] = 1;
+        // }else{
+        //     $validated['status_kelayakan'] = 0;
+
+        // }
+
+
+        // dd($validated['status_kelayakan']);
+
         pendonor::create($validated);
-        return redirect()->route('pendonor.list');
+        Pengguna::create($validated);
+        return redirect()->route('pendonor.dashboard')->with(['success' => 'Regist Berhasil']);
     }
 
     // TODO: show edit form
@@ -97,6 +144,21 @@ class PendonorController extends Controller
             'status_kelayakan' => 'required|max:1'
         ];
         $validated = $request->validate($validated);
+
+        $request->has('kelayakan1') ? $kelayakan1 = 1 : $kelayakan1 = 0;
+        $request->has('kelayakan2') ? $kelayakan2 = 1 : $kelayakan2 = 0;
+        $request->has('kelayakan3') ? $kelayakan3 = 1 : $kelayakan3 = 0;
+        $request->has('kelayakan4') ? $kelayakan4 = 1 : $kelayakan4 = 0;
+        $request->has('kelayakan5') ? $kelayakan5 = 1 : $kelayakan5 = 0;
+
+        $kelayakankedua = $kelayakan1 == 1 && $kelayakan2 == 1 && $kelayakan3 == 1 && $kelayakan4 == 1 && $kelayakan5 == 1;
+
+        if ($kelayakankedua == $validated['status_kelayakan']){
+            $validated['status_kelayakan'] = 1;
+        } else {
+            $validated['status_kelayakan']=0;
+        }
+
         $pendonor->update($validated);
         return redirect()->route('pendonor.list');
     }
