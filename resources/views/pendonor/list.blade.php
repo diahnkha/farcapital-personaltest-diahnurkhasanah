@@ -50,7 +50,7 @@
         <td>
             <a href="{{ route('pendonor.edit', ['pendonor' => $pendonor]) }}">Edit</a>
 
-            <a href="{{ route('pendonor.checkformcreate', ['pendonor' => $pendonor]) }}">Form</a>
+
 
             <form action="{{ route('pendonor.destroy', ['pendonor' => $pendonor]) }}" method="post">
             @csrf

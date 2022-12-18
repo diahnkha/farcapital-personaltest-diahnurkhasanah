@@ -9,6 +9,8 @@ class AuthController extends Controller
 {
     //
     function login(Request $request){
+        // $request['password'] = Hash::make($request['password']);
+        // dd($request['password']);
         if ($request->method() == "GET"){
             return view("login");
         }
@@ -26,7 +28,9 @@ class AuthController extends Controller
                     "msg" => "Email tidak ditemukan"
                 ]);
         }
+
         if (!Hash::check($password, $pengguna->password)){
+            // dd($pengguna->password);
             return redirect()
                 ->back()
                 ->withErrors([

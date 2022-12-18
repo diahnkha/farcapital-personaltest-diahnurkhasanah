@@ -121,7 +121,7 @@ class PendonorController extends Controller
 
         // dd($validated['status_kelayakan']);
 
-        pendonor::create($validated);
+        Pendonor::create($validated);
         Pengguna::create($validated);
         return redirect()->route('pendonor.dashboard')->with(['success' => 'Regist Berhasil']);
     }

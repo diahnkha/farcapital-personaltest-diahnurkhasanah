@@ -40,19 +40,20 @@ Route::prefix('pendonor')
         Route::get('/show/{pendonor}', 'show')->name('show')->middleware(["withauth"]);
         Route::get('/edit/{pendonor}', 'edit')->name('edit')->middleware(["withauth"]);
         Route::get('/create', 'create')->name('create');
-        Route::get('/checkformcreate', 'checkformcreate')->name('checkformcreate');
         Route::post('/store', 'store')->name('store');
-        Route::put('/update/{pendonor}', 'update')->name('update');
-        Route::delete('/destroy/{pendonor}', 'destroy')->name('destroy');
+        Route::put('/update/{pendonor}', 'update')->name('update')->middleware(["withauth"]);
+        Route::delete('/destroy/{pendonor}', 'destroy')->name('destroy')->middleware(["withauth"]);
     });
 
 Route::prefix('petugas')
     ->name('petugas.')
+    ->middleware(["withauth"])
     ->controller(PetugasController::class)
     ->group(function () {
         Route::get('/', 'index')->name('dashboard'); // petugas.dashboard
         Route::get('/listpendonor', 'listpendonor')->name('listpendonor'); // petugas.listpendonor
-        Route::get('/detail/{pendonor:email}', 'detailpendonor')->name('detailpendonor'); //petugas.detailpendonor
+        Route::get('/detail/{pendonor}', 'detailpendonor')->name('detailpendonor'); //petugas.detailpendonor
+        // Route::get('/detail/{pendonor:email}', 'detailpendonor')->name('detailpendonor'); //petugas.detailpendonor
     });
 
 
